@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: API de Vente
+  version: 1.0.0
+  description: API pour analyser les ventes et recommander des produits.
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /stats/sales/total:
+    get:
+      summary: Obtenir le nombre total de ventes et le montant total des ventes.
+      responses:
+        '200':
+          description: Détails des ventes totales.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_sales:
+                    type: integer
+                    example: 500
+                  total_amount:
+                    type: number
+                    format: float
+                    example: 15000.50
+
+  /stats/sales/best-product:
+    get:
+      summary: Obtenir le produit ayant généré le plus de revenus.
+      responses:
+        '200':
+          description: Détails du meilleur produit.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  best_product:
+                    type: string
+                    example: "Produit A"
+                  revenue:
+                    type: number
+                    format: float
+                    example: 2500.75
+
+  /stats/sales/by-category:
+    get:
+      summary: Obtenir le total des ventes par catégorie.
+      responses:
+        '200':
+          description: Détails des ventes par catégorie.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      example: "Électronique"
+                    total_revenue:
+                      type: number
+                      format: float
+                      example: 5000.00
+
+  /stats/sales/by-month:
+    get:
+      summary: Obtenir le nombre de ventes et le montant total par mois.
+      responses:
+        '200':
+          description: Détails des ventes par mois.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    month:
+                      type: string
+                      example: "2024-01"
+                    sales_count:
+                      type: integer
+                      example: 20
+                    total_amount:
+                      type: number
+                      format: float
+                      example: 2000.50
+
+  /recommandations/{client_id}:
+    get:
+      summary: Obtenir des recommandations de produits pour un client donné.
+      parameters:
+        - name: client_id
+          in: path
+          required: true
+          description: ID du client pour lequel obtenir des recommandations.
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: Liste de produits recommandés.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product_name:
+                      type: string
+                      example: "Produit B"
+                    category:
+                      type: string
+                      example: "Électronique"
+                    price:
+                      type: number
+                      format: float
+                      example: 199.99
