@@ -15,7 +15,7 @@ Cette API permet d'analyser les données de ventes d'une société de vente en l
 1. Clonez le repository :
    ```bash
    git clone https://github.com/DhiaBenAmor/Test.git
-
+   ```
 
 ## Créez un environnement virtuel :
 
@@ -23,12 +23,12 @@ Cette API permet d'analyser les données de ventes d'une société de vente en l
 python -m venv venv
 source venv/bin/activate  # Pour Linux/Mac
 venv\Scripts\activate  # Pour Windows
-
+```
 
 Installez les dépendances :
 ```
 pip install -r requirements.txt
-
+```
 ## Configuration de la base de données
 
 1) Assurez-vous que MySQL est installé et en cours d'exécution.
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 2) Créez une base de données nommée test :
 ```SQL:
 CREATE DATABASE test;
-
+```
 
 Modifiez le fichier config.py si nécessaire pour correspondre à votre configuration de base de données.
 
@@ -59,11 +59,11 @@ Le fichier `visualize_clusters.py` vous permet de visualiser les clusters formé
 1. **Assurez-vous d'avoir installé toutes les dépendances**. Si ce n'est pas déjà fait, utilisez la commande suivante pour installer les bibliothèques nécessaires :
    ```bash
    pip install -r requirements.txt
-
+```
 Exécutez le script : Vous pouvez exécuter le fichier visualize_clusters.py avec la commande suivante :
 
 ```bash
 python visualize_clusters.py
-
+```
 
 
