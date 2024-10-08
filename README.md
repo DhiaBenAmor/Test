@@ -60,6 +60,8 @@ Le fichier `visualize_clusters.py` vous permet de visualiser les clusters formé
    ```bash
    pip install -r requirements.txt
 ```
+
+
 Exécutez le script : Vous pouvez exécuter le fichier visualize_clusters.py avec la commande suivante :
 
 ```bash
