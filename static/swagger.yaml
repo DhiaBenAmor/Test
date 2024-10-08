@@ -121,3 +121,47 @@ paths:
                       type: number
                       format: float
                       example: 199.99
+
+  /recommandationskmeans/{client_id}:
+    get:
+      summary: Obtenir des recommandations de produits basées sur le modèle K-means.
+      parameters:
+        - name: client_id
+          in: path
+          required: true
+          description: ID du client pour lequel obtenir des recommandations.
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: Détails du produit recommandé basé sur la moyenne des dépenses du client.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Avg_client_spent:
+                    type: number
+                    format: float
+                    example: 150.75
+                  product_name:
+                    type: string
+                    example: "Produit B"
+                  category:
+                    type: string
+                    example: "Électronique"
+                  price:
+                    type: number
+                    format: float
+                    example: 199.99
+        '404':
+          description: Aucun produit disponible dans le cluster correspondant.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Aucun produit disponible dans ce cluster."

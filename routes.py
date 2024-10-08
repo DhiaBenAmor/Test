@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify
 from models import db, Product, Sale, Client
 from sqlalchemy import func
+from kmeans import train_kmeans_model 
+import pandas as pd
 
 api = Blueprint('api', __name__)
 
@@ -57,3 +59,49 @@ def recommend_products(client_id):
         recommended_products = db.session.query(Product).limit(3).all()
 
     return jsonify([{'product_name': product.name, 'category': product.category, 'price': product.price} for product in recommended_products])
+
+
+
+
+def recommend_products_kmeans(client_id):
+    # Obtenir la moyenne des dépenses du client
+    average_spent = db.session.query(func.avg(Sale.amount)).filter(Sale.client_id == client_id).scalar() or 0
+
+    # Récupérer tous les produits pour former le modèle K-means
+    products = db.session.query(Product.id, Product.name,Product.category, Product.price).all()
+    
+    # Convertir en DataFrame pour le traitement
+    product_df = pd.DataFrame(products, columns=['id', 'name','category', 'price'])
+
+    # Former le modèle K-means et obtenir les données de clustering
+    product_data, kmeans_model = train_kmeans_model(product_df)
+
+    # Ajouter une colonne de cluster au DataFrame des produits
+    product_data['cluster'] = kmeans_model.predict(product_data[['price']])  
+
+    # Déterminer le cluster correspondant à la moyenne des dépenses du client
+    if average_spent < 180:  #  faible dépense
+        cluster_to_recommend = 2  
+    elif average_spent >= 180 and average_spent < 330:  # dépense moyenne
+        cluster_to_recommend = 0  
+    else:
+        cluster_to_recommend = 1  
+
+    # Filtrer les produits dans le cluster recommandé
+    recommended_products = product_data[product_data['cluster'] == cluster_to_recommend]
+
+    # Sélectionner un produit à recommander (par exemple, le plus acheté dans le cluster)
+    if not recommended_products.empty:
+        recommended_product = recommended_products.iloc[0]  # Prendre le premier produit dans le cluster
+    else:
+        return jsonify({'message': 'Aucun produit disponible dans ce cluster.'})
+
+    return jsonify({
+        'Avg_client_spent': average_spent,
+        'product_name': recommended_product['name'],
+        'price': recommended_product['price'],
+        'category': recommended_product['category']
+    })
+@api.route('/recommandationskmeans/<int:client_id>', methods=['GET'])
+def get_recommendations(client_id):
+    return recommend_products_kmeans(client_id)
