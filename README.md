@@ -49,7 +49,12 @@ Modifiez le fichier config.py si nécessaire pour correspondre à votre configur
 - GET /recommandations/{client_id} : Retourne une liste de 3 produits recommandés pour un client donné.
 - GET //recommandationskmeans/<int:client_id> : Retourne un produit recommandé pour un client donné.
 
+## Tester l'API
+Vous pouvez tester l'API de plusieurs manières :
 
+Postman : Utilisez Postman pour envoyer des requêtes HTTP aux différents endpoints.
+
+Swagger UI : Accédez à la documentation Swagger de l'API en allant sur l'URL suivante : http://localhost:5000/swagger. Vous pouvez interagir avec l'API directement via cette interface.
 ## Visualisation des Clusters
 
 Le fichier `visualize_clusters.py` vous permet de visualiser les clusters formés par le modèle K-means sur les produits en se basant sur le prix
