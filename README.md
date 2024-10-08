@@ -59,7 +59,6 @@ Le fichier `visualize_clusters.py` vous permet de visualiser les clusters formé
 1. **Assurez-vous d'avoir installé toutes les dépendances**. Si ce n'est pas déjà fait, utilisez la commande suivante pour installer les bibliothèques nécessaires :
    ```bash
    pip install -r requirements.txt
-```
 
 
 Exécutez le script : Vous pouvez exécuter le fichier visualize_clusters.py avec la commande suivante :
